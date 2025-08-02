@@ -1,17 +1,34 @@
 import pandas as pd
 
-def soma_gastos(arquivo):
-    df = pd.read_excel(arquivo)
-    return df['custo_março'].sum()
+# Dados de exemplo
+dados = {
+    "Produtos A": ["Banana", "Maçã", "Laranja", "Uva"],
+    "Valores A": [2.5, 3.0, 4.2, 1.8],
 
-# Criando um DataFrame com dados de exemplo
-dados = {'março': ['café', 'BC', 'passagem'],
-         'custo_março': [25, 50, 35],
-         }
+    "Produtos B": ["Arroz", "Feijão", "Macarrão", "Farinha"],
+    "Valores B": [5.0, 6.0, 3.5, 4.5],
 
+    "Produtos C": ["Sabonete", "Shampoo", "Pasta", "Escova"],
+    "Valores C": [1.2, 7.5, 3.0, 2.5],
+}
+
+# Descobrir quantos pares de colunas temos
+num_linhas = len(next(iter(dados.values())))
 df = pd.DataFrame(dados)
 
-# Escreve o DataFrame em um arquivo Excel
-df.to_excel('saida.xlsx', index=False)
+# Adicionar linha com as somas
+linha_soma = {}
+for col in df.columns:
+    if "Valores" in col:
+        linha_soma[col] = df[col].sum()
+    else:
+        linha_soma[col] = "Total"
 
-print(df.head())
+# Adiciona a linha ao DataFrame
+df.loc["Total"] = linha_soma
+
+# Salvar como Excel ou mostrar no terminal
+print(df)
+
+# (Opcional) salvar em Excel
+df.to_excel("produtos_valores.xlsx", index=False)
