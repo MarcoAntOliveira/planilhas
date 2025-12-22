@@ -1,34 +1,33 @@
 import pandas as pd
 
-# Dados de exemplo
+# Valores
+mercado_agosto = 9.60 + 7.60 + 36.62 + 17.77 + 3.98 + 47.84 + 28.61
+locomocao_agosto = 19.00 + 3.50 + 19.12 + 12.50
+bolsa_agosto = 963.89 + 300
+cartao_agosto = 150
+
+# Dados
 dados = {
-    "Produtos A": ["Banana", "Maçã", "Laranja", "Uva"],
-    "Valores A": [2.5, 3.0, 4.2, 1.8],
-
-    "Produtos B": ["Arroz", "Feijão", "Macarrão", "Farinha"],
-    "Valores B": [5.0, 6.0, 3.5, 4.5],
-
-    "Produtos C": ["Sabonete", "Shampoo", "Pasta", "Escova"],
-    "Valores C": [1.2, 7.5, 3.0, 2.5],
+    "Agosto": ["Aluguel", "Aniversário Yukio", "Mercado Agosto", "Locomoção Agosto", "Papelaria", "cartao agosto"],
+    "Valores": [801, 23.42, mercado_agosto, locomocao_agosto, 29.30, cartao_agosto],
+    "Entradas Agosto": ["Bolsa", "Dinheiro mãe", "", "", ""],
+    "valores_entradas": [bolsa_agosto, 150, 0, 0, 0],
 }
 
-# Descobrir quantos pares de colunas temos
-num_linhas = len(next(iter(dados.values())))
+# Criar DataFrame
 df = pd.DataFrame(dados)
 
-# Adicionar linha com as somas
-linha_soma = {}
-for col in df.columns:
-    if "Valores" in col:
-        linha_soma[col] = df[col].sum()
-    else:
-        linha_soma[col] = "Total"
+# Criar linha total de gastos e entradas
+total_gastos = df["Valores"].sum()
+total_entradas = df["valores_entradas"].sum()
+sobrou = total_entradas - total_gastos
 
-# Adiciona a linha ao DataFrame
-df.loc["Total"] = linha_soma
+# Adicionar linha de totais
+df.loc["Total"] = ["Total", total_gastos, "Total Entradas", total_entradas]
+df.loc["Sobrou"] = ["Sobrou", sobrou, "", ""]
 
-# Salvar como Excel ou mostrar no terminal
+# Mostrar tabela
 print(df)
 
-# (Opcional) salvar em Excel
-df.to_excel("produtos_valores.xlsx", index=False)
+# Salvar em Excel
+df.to_excel("gastos.xlsx", index=False)
