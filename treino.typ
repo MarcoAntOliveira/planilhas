@@ -1,4 +1,4 @@
-#let results = csv("treino.csv")
+#let results = csv("treino2.csv")
 
 #table(
   columns: 8,
