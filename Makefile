@@ -16,3 +16,11 @@ train:
 	rm -rf treino.pdf
 	typst compile treino.typ 
 	@xdg-open treino.pdf
+
+ train3:
+	python3 treino3.py
+	
+	@clear
+	rm -rf treino.pdf
+	typst compile treino.typ 
+	@xdg-open treino.pdf
